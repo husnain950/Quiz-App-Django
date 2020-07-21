@@ -1,0 +1,42 @@
+{%extends 'base.html'%}
+{% block title %}
+Report
+{% endblock %}
+{% block content %}
+
+<div class="container">
+        <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{%url 'home' %}">Home</a></li>
+                  <li class="breadcrumb-item"><a href="{%url 'home'%}">{{quiz.name}}</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Report</li>
+                </ol>
+              </nav>
+    <table id="example" class="table table-hover display">
+        <thead class="thead-dark">
+            <tr>
+                <th>Question</th>
+                <th>Correct responses/Total responses</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for answer, response in report%}
+            <tr>
+                <td>{{answer.question.text}}</td>
+                <td>{{response}}/{{answer.question.Attempted.count}}</td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}
+{%block js%}
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+
+</script>
+{% endblock %}

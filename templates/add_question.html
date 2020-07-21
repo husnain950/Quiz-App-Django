@@ -1,0 +1,28 @@
+{%extends 'base.html'%}
+{% block title %}
+Add Question
+
+{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading">{{quiz.name}}</h4>
+        Enter Question and Click Save and Continue to be redirected to Option page
+    </div>
+
+    <form class="form-group " method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+            <label>{{ field.label_tag }}</label><br>
+            {{field}}
+        </div>
+        {% endfor %}
+        <input type="submit" class="btn btn-success" value="Save And Continue">
+        
+    </form>
+    <a href="{%url 'home'%}">Cancel</a>
+
+</div>
+{%endblock%}

@@ -1,0 +1,83 @@
+{%extends 'base.html'%}
+{% block title %}
+Attempt
+{% endblock %}
+{% block content %}
+<div class="container">
+
+
+    <!-- The Modal -->
+    <div class="modal fade bd-example-modal-lg  " id="myModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title h2">Instructions</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <ul>
+                        <li>Reloading the page will cause refresh the page and you have to select all options again.</li>
+                    <li>
+                        You can change your auestion answers before submitting the paper
+
+                    </li>
+                    </ul>
+                    
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {%for index, question in questions%}
+
+        <div class="p-3 mb-2 bg-dark text-white">
+            <span class="bg-success text-dark rounded-circle px-3 py-1 mx-2 h3"> {{index}}</span> <span
+                class="h3">{{question.text}}</span>
+        </div>
+        {% for answer in question.answers.all %}
+        <div class="input-group form-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="radio" aria-label="Radio button for following text input" id="{{question.pk}}"
+                        name="{{question.pk}}" value="{{answer.pk}}" required>
+                </div>
+            </div>
+            <label class="form-control">{{answer.text}}</label>
+        </div>
+        {%endfor%}
+        {%endfor%}
+        <div class="text-center">
+            <input data-placement="bottom" data-toggle="tooltip" title="Submit Paper & view Result"
+                class="btn btn-success" type="submit" value="Show Result">
+        </div>
+    </form>
+</div>
+{%endblock%}
+
+{%block js%}
+<script>
+    $(document).ready(function () {
+        $('#myModal').modal('show');
+        $('[data-toggle="tooltip"]').tooltip();
+        $('#myModal').modal({keyboard: true}) 
+
+    });
+</script>
+
+
+{%endblock%}

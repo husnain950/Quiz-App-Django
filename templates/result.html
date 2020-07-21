@@ -1,0 +1,34 @@
+{%extends 'base.html'%}
+{% block title %}
+Result
+{% endblock %}
+{% block content %}
+<div class="container">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">{{quiz.name}}</li>
+          <li class="breadcrumb-item" aria-current="page">Result Report</li>
+        </ol>
+      </nav>
+    <h1 class="  text-center">Your Score is {{score}}/{{total}}</h1>
+    {% for question, answer, selected in quiz_sol %}
+    <dl class="row">
+        <dt class="col-sm-3">Question</dt>
+        <dd class="col-sm-9">{{question.text}}</dd>
+
+        <dt class="col-sm-3">Answer</dt>
+        <dd class="col-sm-9">
+            <p class="lead">{{answer.text}}</p>
+        </dd>
+
+        <dt class="col-sm-3">Selected Option</dt>
+        <dd class="col-sm-9"><p
+                class="{%if answer.text != selected.text%}lead text-danger{%else%}lead text-primary{%endif%}">
+            {{selected.text}}{%if answer.text == selected.text%}<span style="all:initial"> &#x2714;</span>{%else%}<span style="all:initial"> &#10006;</span>{%endif%}</p></dd>
+
+    </dl>
+    {% endfor %}
+</div>
+
+{%endblock%}

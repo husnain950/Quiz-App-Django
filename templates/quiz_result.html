@@ -1,0 +1,51 @@
+{%extends 'base.html'%}
+{% block title %}
+Result
+{% endblock %}
+{% block content %}
+<div class="container">
+
+        <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="/">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Result</li>
+                </ol>
+              </nav>
+    <table id="example" class="table table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th>Student</th>
+            <th>Score</th>
+            <th>Date</th>
+            <th>Result</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%for quiz in quizzes%}
+        <tr>
+            <td><a data-placement="bottom" data-toggle="tooltip" title="Click to view Paper!" href="{%url 'result_details' quiz.quiz_id quiz.taken_by.id %}">{{quiz.taken_by.username}}</a></td>
+            <td><mark class="h4">{{quiz.score}}</mark></td>
+            <td>{{quiz.date}}</td>
+            <td><a data-placement="bottom" data-toggle="tooltip" title="Click to view Paper!" class="btn btn-outline-success" href="{%url 'result_details' quiz.quiz_id quiz.taken_by.id %}">Insights</a>
+            </td>
+        </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+
+
+</div>
+
+{%endblock%}
+{%block js%}
+<script>
+$(document).ready( function () {
+    $('#example').DataTable();
+} );
+
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();   
+});
+
+</script>
+{% endblock %}

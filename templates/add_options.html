@@ -1,0 +1,83 @@
+{%extends 'base.html'%}
+{% block title %}
+Add Options
+{% endblock %}
+{% block content %}
+
+<div class="container">
+
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">{{question.text}}</h4>
+        Add options and marked the correct
+    </div>
+
+    <br>
+    <form method="POST" id="form_id" onsubmit="return validateForm()">
+        {% csrf_token %}
+        <div class="input-group form-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="radio" aria-label="Radio button for following text input" name="Correct" value="A"
+                           required>
+                </div>
+            </div>
+            <input placeholder="Option A"  type="text" class="form-control" aria-label="Text input with radio button" name="A" required>
+        </div>
+        <div class="input-group form-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="radio" aria-label="Radio button for following text input" name="Correct" value="B"
+                           required>
+                </div>
+            </div>
+            <input placeholder="Option B" type="text" class="form-control" aria-label="Text input with radio button" name="B" required>
+        </div>
+        <div class="input-group form-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="radio" aria-label="Radio button for following text input" name="Correct" value="C"
+                           required>
+                </div>
+            </div>
+            <input placeholder="Option C" type="text" class="form-control" aria-label="Text input with radio button" name="C" required>
+        </div>
+        <div class="input-group form-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="radio" aria-label="Radio button for following text input" name="Correct" value="A"
+                           required>
+                </div>
+            </div>
+            <input placeholder="Option D" type="text" class="form-control" aria-label="Text input with radio button" name="D" required>
+        </div>
+
+        <input class="btn btn-success" value="Save & and add more" type="submit">
+        
+    </form>
+</div>
+<script>
+        function validateForm()
+        {
+            var msg= "",
+                fields = document.getElementById("form_id").getElementsByTagName("input");
+            
+            for (var i=0; i<fields.length; i++){
+                if(fields[i].type.toLowerCase() == "text"){
+                    inp = fields[i].value.trim() 
+                if (inp == "") 
+                    msg += 'Input Field can not be blank. \n';
+                }
+            }
+        
+            if(msg) {
+                alert(msg);
+                return false;
+            }
+            else
+                return true;
+        }
+
+
+
+</script>
+{%endblock%}

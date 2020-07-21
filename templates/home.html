@@ -1,0 +1,56 @@
+{%extends 'base.html'%}
+{% block title %}
+Home
+{% endblock %}
+{% block content %}
+
+<div class="container">
+
+    {%if not quizzes%}
+    <p class="text-danger h1 text-center">Sorry, No Quiz To show. <a class="btn btn-lg btn-outline-success"
+                                                                     href="{%url 'add_quiz' %}">Add Quiz</a></p>
+    {%else%}
+    <table id="example" class="table table-hover display">
+        <thead class="thead-primary">
+        <tr class="table-success">
+            <th>Quiz</th>
+            <th>Questions</th>
+            <th>Attempts</th>
+            <th>Result</th>
+            <th>Report</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%for quiz in quizzes%}
+        <tr>
+            <td><a href="{%url 'quiz_details' quiz.pk%}">{{quiz.name}}</a></td>
+            <td class="h4 text-center">{{quiz.questions.all.count}}</td>
+            <td class="h4 text-center">{{quiz.taken_quizzes.all.count}}</td>
+            <td><a class="btn btn-outline-info" href="{%url 'quiz_result' quiz.pk%}">Show Result</a></td>
+            <td><a class="btn btn-outline-primary" href="{%url 'report_view' quiz.pk%}">Show Report</a></td>
+            <td>
+                <a class="btn btn-outline-dark" href="{%url 'quiz_details' quiz.pk%}">Details</a>
+                {%if not quiz.publish%}
+                <a class="btn btn-success" href="{%url 'publish_quiz' quiz.pk%}">Publish</a>
+                {%else%}
+                <a href="{%url 'offline_quiz' quiz.pk%}" class="btn btn-warning ">Offline</a>
+                {%endif%}
+            </td>
+        </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+    {%endif%}
+
+</div>
+
+{% endblock %}
+{%block js%}
+<script>
+$(document).ready( function () {
+    $('#example').DataTable();
+} );
+
+</script>
+{% endblock %}

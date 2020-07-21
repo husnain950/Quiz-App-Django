@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+
+    <div class="wrapper">
+
+        <form method="post" class="form-signin">
+            {% csrf_token %}
+
+            <h3 class="form-signin-heading">Please Log In</h3>
+            <hr class="colorgraph"><br>
+
+            <input type="text" class="form-control" name="uname" placeholder="Username" required="" autofocus="" />
+            <br>
+            <input type="password" class="form-control" name="pas" placeholder="Password" required="" />
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="text-center text-danger">{{ message }}</div>
+                <br>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit">Login</button>
+        </form>
+    </div>
+    <div class="border-top card-body text-center">New member? <a href="{% url 'signup'%}">Sign Up</a></div>
+</div>
+
+{% endblock %}

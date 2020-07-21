@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Peralta" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    <link rel="stylesheet" href="{% static 'css/buttons.css' %}">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+
+    <title>{% block title %}Quiz App{% endblock %}</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #7557a3;">
+        <div class="container">
+            <a style="font-size: x-large; font-family: Verdana, Geneva, Tahoma, sans-serif;" class="navbar-brand"
+                href="{% url 'home' %}">Quiz</a>
+            {%if user.is_authenticated %}
+            {%if user.is_student%}
+            <a class="btn btn-success btn-lg" href="{%url 'result_view' %}">Results</a>
+            {%else%}
+            <a class="btn btn-lg btn-success btn-radius text-white" href="{% url 'add_quiz' %}">Add quiz</a>
+
+            {%endif%}
+        </div>
+
+
+        <span class="text-light navbar-brand">Hello, {{user.username}}</span>
+        <div class="">
+            <a class="navbar-brand btn btn-outline-info text-white " href="{% url 'signout' %}">Logout</a>
+        </div>
+        {%else%}
+        <div class="navbar-nav ml-auto">
+        <a class="btn btn-primary btn-radius" href="{% url 'home' %}">Login</a>
+        <a class="btn btn-primary btn-radius" href="{% url 'signup' %}">Sign Up</a>
+        </div>
+        {%endif%}
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+    <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+    <script src="{% static 'js/datatables.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    {%block js%}
+    {%endblock%}
+</body>
+
+</html>

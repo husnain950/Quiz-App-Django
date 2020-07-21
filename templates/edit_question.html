@@ -1,0 +1,14 @@
+{%extends 'base.html'%}
+{% block title %}
+Edit Question
+{% endblock %}
+{% block content %}
+<div class="container">
+    <form class="form-group" method="POST">
+        {% csrf_token %}
+        {{form}}
+        <input type="submit">
+    </form>
+    <a href="{% url 'home'%}">Go back</a>
+</div>
+{%endblock%}

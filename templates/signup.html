@@ -1,0 +1,156 @@
+{%extends 'base.html'%}
+{% block title %}
+Sign Up
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <header class="card-header">
+                    <a href="{% url 'home'%}" class="float-right btn btn-outline-primary mt-1">Log in</a>
+                    <h4 class="card-title mt-2">Sign up</h4>
+                </header>
+                <article class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label>First Select your role</label><br>
+                            <label class="form-check form-check-inline pl-100">
+                                <input class="form-check-input" id="t" type="radio" name="desig" value="T" required>
+                                <span class="form-check-label"> Teacher </span>
+                            </label>
+                            <label class="form-check form-check-inline">
+                                <input class="form-check-input" id="s" type="radio" name="desig" value="S" required>
+                                <span class="form-check-label"> Student</span>
+                            </label>
+                        </div> <!-- form-group end.// -->
+                        <div class="form-group">
+                            <label id="rn"></label>
+                            <input name="uname" class="form-control" placeholder="" required>
+                            <small class="form-text text-muted">Required 150 characters or fewer. Only letter digits and
+                                "-" is allowed</small>
+                        </div> <!-- form-group end.// -->
+                        <div class="form-group">
+                            <label>Email address</label>
+                            <input name="email" type="email" class="form-control" placeholder="john@doe.com" required>
+                            <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div> <!-- form-group end.// -->
+
+
+
+                        <div class="form-group">
+                            <label>Create password</label>
+                            <input name="pas1" class="form-control" type="password" required>
+                            <small class="form-text text-muted">Password should be atleast 8 character and must contain 1 digit.</small>
+
+                        </div> <!-- form-group end.// -->
+                        <div class="form-group">
+                            <label>Confirm password</label>
+                            <input name="pas2" class="form-control" type="password" required>
+                        </div> <!-- form-group end.// -->
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block"> Register </button>
+                        </div> <!-- form-group// -->
+                        <small class="text-muted">By clicking the 'Sign Up' button, you confirm that you accept our <br>
+                            Terms of use and Privacy Policy.</small>
+                    </form>
+                </article> <!-- card-body end .// -->
+                <div class="border-top card-body text-center">Have an account? <a href="{% url 'home'%}">Log In</a>
+                </div>
+            </div> <!-- card.// -->
+        </div> <!-- col.//-->
+
+    </div> <!-- row.//-->
+
+
+</div>
+{%endblock%}
+
+{% block js%}
+<script>
+    $(document).ready(function () {
+        $t = 0;
+        $(":input").not("[name=desig]")
+            .prop("disabled", true);
+
+        $('input[value=S]').change(function () {
+            $('#rn').html('Enter Roll Number');
+            $('#rn').next().attr("placeholder", "E.g 015-BSCS-16");
+            $(":input").not("[name=desig]")
+                .prop("disabled", false);
+        });
+        $('input[value=T]').change(function () {
+            $('#rn').html('Enter User Name');
+            $('#rn').next().attr("placeholder", "E.g SyedAR");
+            $(":input").not("[name=desig]")
+                .prop("disabled", false);
+        });
+
+        $("input[name='uname']").focusout(function () {
+            if ($(this).val() == '' || $(this).val().length > 150) {
+                $(this).css('border', 'solid 2px red');
+                $(':input[type="submit"]').prop('disabled', true);
+            }
+            else {
+                $(':input[type="submit"]').prop('disabled', false);
+                $(this).css('border', 'solid 2px green');
+            }
+        })
+        $("input[name='email']").focusout(function () {
+            var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+            if (!emailReg.test($("input[name='email']").val()) || $(this).val() == '') {
+                $(this).css('border', 'solid 2px red');
+                $(':input[type="submit"]').prop('disabled', true);
+            }
+            else {
+
+                $(this).css('border', 'solid 2px green');
+                $(':input[type="submit"]').prop('disabled', false);
+            }
+        })
+
+        $("input1").focusout(function inputcheck() {
+            if ($(this).val() == '') {
+                $(this).css('border', 'solid 2px red');
+                $(':input[type="submit"]').prop('disabled', true);
+            }
+            else {
+
+                $(this).css('border', 'solid 2px green');
+                $(':input[type="submit"]').prop('disabled', false);
+            }
+        })
+        $("input[name='pas1']").focusout(function () {
+            var reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+            if ($(this).val() == '' || $(this).val().length < 8 || !reg.test($(this).val())) {
+                $(this).css('border', 'solid 2px red');
+                $(':input[type="submit"]').prop('disabled', true);
+            }
+            else {
+
+                $(this).css('border', 'solid 2px green');
+                $(':input[type="submit"]').prop('disabled', false);
+            }
+        })
+        $("input[name='pas2']").focusout(function () {
+            if ($(this).val() != $("input[name='pas1']").val()) {
+                $(this).css('border', 'solid 2px red');
+                $(':input[type="submit"]').prop('disabled', true);
+            }
+            else {
+                var reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+                if ($(this).val() == '' || $(this).val().length < 8 || !reg.test($(this).val())) {
+                    $(this).css('border', 'solid 2px red');
+                    $(':input[type="submit"]').prop('disabled', false);
+                }
+                else {
+
+                    $(this).css('border', 'solid 2px green');
+                }
+            }
+        })
+
+    });  
+</script>
+{%endblock%}

@@ -1,0 +1,35 @@
+{%extends 'base.html'%}
+{% block title %}
+Result Details
+{% endblock %}
+{% block content %}
+<div class="container">
+        <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="/">Home</a></li>
+                  <li class="breadcrumb-item"><a href="#"><a href="{{request.META.HTTP_REFERER}}">Result</a>
+                  </a></li>
+                  <li class="breadcrumb-item active" aria-current="page">{{name}}</li>
+                </ol>
+              </nav>
+
+    <table id="example" class="table table-hover display ">
+        <thead class="thead-primary">
+        <tr class="table-success">
+            <th>Questions</th>
+            <th>Attempt</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%for item in result%}
+        <tr class="table-info">
+            <td>{{item.question.text}}</td>
+            <td>{{item.answer.text}}</td>
+        </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+</div>
+
+{%endblock%}
+

@@ -1,0 +1,31 @@
+{%extends 'base.html'%}
+{% block title %}
+Edit Options
+{% endblock %}
+{% block content %}
+<div class="container">
+    <p class="mark h3">Question: {{answers.first.question.text}}</p>
+    <form class="form-group" method="POST">
+        {% csrf_token %}
+        {%for answer in answers%}
+        <div class="input-group form-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="radio" aria-label="Radio button for following text input" name="correct"
+                           value="{{answer.pk}}" required>
+                </div>
+            </div>
+            <input type="text" class="form-control" aria-label="Text input with radio button" name="{{answer.pk}}"
+                   value="{{answer.text}}" {%if answer.is_correct%}checked{%endif%} required>
+        </div>
+        {%empty%}
+        <kbd class="h4 text-white">No Options</kbd>
+        {%endfor%}
+
+
+        <input type="submit" class="btn btn-success" value="Save">
+    </form>
+
+    <a href="{% url 'home'%}">Go back</a>
+</div>
+{%endblock%}

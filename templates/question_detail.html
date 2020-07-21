@@ -1,0 +1,58 @@
+{%extends 'base.html'%}
+{% block title %}
+Question Details
+{% endblock %}
+{% block content %}
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="{%url 'quiz_details' question.quiz.pk%}">{{question.quiz.name}}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{question.text}}</li>
+    </ol>
+  </nav>
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete this quiz? It is not revetable
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a class="btn btn-danger" href="{%url 'delete_question' question.pk%}">Delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="alert alert-primary" role="alert">
+    <h4 class="alert-heading">{{question.text}}</h4>
+  </div>
+  <ul>
+    {% for answer in answers %}
+    <div class="alert alert-success" role="alert">
+      <strong>{{answer.text}}{%if answer.is_correct%}<span style="all:initial"> &#x2714;</span>{%endif%}</strong>
+    </div>
+
+    {% empty %}
+    <div class="alert alert-danger" role="alert">
+      <span class="alert-heading">No options added for this question.</span>
+    </div>
+    <a class="btn btn-outline-primary btn-lg" href="{%url 'add_options' question.pk %}">Add Options</a>
+    {%endfor%}
+  </ul>
+  <a class="btn btn-outline-dark" href="{%url 'edit_question' question.pk%}">Edit Question</a>
+  {%if answers.count > 0%}
+  <a class="btn btn-outline-dark" href="{%url 'edit_options' question.pk %}">Edit Options</a>
+  {%endif%}
+  <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal">
+    Delete Question
+  </button>
+</div>
+{%endblock%}

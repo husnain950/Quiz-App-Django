@@ -1,0 +1,42 @@
+{%extends 'base.html'%}
+{% block title %}
+Home
+{% endblock %}
+{% block content %}
+
+<div class="container">
+
+    <table id="table_id" class="table table-hover display">
+        <thead class="thead-dark">
+        <tr>
+            <th>Quiz</th>
+            <th>Attempt</th>
+            <th>Questions</th>
+            <th>Published Date</th>
+            <th>Created By</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%for quiz in quizzes%}
+        <tr>
+            <td>{{quiz.name}}</td>
+            <td><a class="btn btn-dark" href="{%url 'take_quiz' quiz.pk%}">Take Quiz</a></td>
+            <td>{{quiz.questions.all.count}}</td>
+            <td>{{quiz.date}}</td>
+            <td>{{quiz.owner.username}}</td>
+        </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}
+{%block js%}
+<script>
+$(document).ready( function () {
+    $('#table_id').DataTable();
+} );
+
+</script>
+{% endblock %}
